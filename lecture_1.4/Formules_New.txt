@@ -1,1 +1,18 @@
+1. Create auto-calculated field 'Age'
 
+FLOOR((TODAY() - Birthday__c) / 365.2425)
+
+2. Create field 'Upcoming Flights Count' - displays number of 'Upcoming' flights:
+
+Roll Up Summary -> Object:Flight -> Roll-Up Type: COUNT -> Filter Criteria:
+Only records meeting certain criteria should be included in the calculation -> 
+Field:Status - Operator:equels - Value:Upcoming.
+
+3. Create validation rule - не пускать на рейс (создание записи Flight), 
+если не подходит по возрасту:
+
+Tourist__r.Age__c < Trip__r.Minimal_Age__c
+
+4. Create validation rule - не пускать на рейс, если уже улетел:
+
+ISPICKVAL(Status__c,'Past')
